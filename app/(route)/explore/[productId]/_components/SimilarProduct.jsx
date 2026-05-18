@@ -1,29 +1,40 @@
-"use client"
+"use client";
 
-import axios from "axios"
-import React, { useEffect, useState } from "react"
-import DisplayProductList from "@/app/_components/DisplayProductList"
+import axios from "axios";
+import React, { useCallback, useEffect, useState } from "react";
+import DisplayProductList from "@/app/_components/DisplayProductList";
 
 function SimilarProduct({ category, productId }) {
-  const [productList, setProductList] = useState([])
+  const [productList, setProductList] = useState([]);
+
+  const GetSimilarProductList = useCallback(
+    async (signal) => {
+      if (!category || !productId) return;
+
+      const result = await axios.get(
+        `/api/products?category=${category}&productId=${productId}`,
+        { signal }
+      );
+
+      setProductList(Array.isArray(result.data) ? result.data : []);
+    },
+    [category, productId]
+  );
 
   useEffect(() => {
-    if (category) {
-      GetSimilarProductList()
-    }
-  }, [category, productId])
+    const controller = new AbortController();
 
-  const GetSimilarProductList = async () => {
-    try {
-      const result = await axios.get(
-        "/api/products?category=" + category + "&productId=" + productId
-      )
-      console.log("similar products:", result.data)
-      setProductList(result.data)
-    } catch (error) {
-      console.log("SIMILAR PRODUCT ERROR:", error?.response?.data || error)
+    if (category) {
+      GetSimilarProductList(controller.signal).catch((error) => {
+        if (error?.name === "CanceledError" || error?.code === "ERR_CANCELED") return;
+        console.log("SIMILAR PRODUCT ERROR:", error?.response?.data || error);
+      });
+    } else {
+      setProductList([]);
     }
-  }
+
+    return () => controller.abort();
+  }, [GetSimilarProductList, category]);
 
   return (
     <div>
@@ -35,7 +46,7 @@ function SimilarProduct({ category, productId }) {
         <p>No similar products found</p>
       )}
     </div>
-  )
+  );
 }
 
-export default SimilarProduct
+export default SimilarProduct;

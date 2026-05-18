@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,6 +18,8 @@ function ProductCardItem({ product, editable = false, purchase }) {
           alt={product.title || "product"}
           width={400}
           height={300}
+          loading="lazy"
+          className="rounded-lg object-cover w-full h-auto"
         />
 
         <div className="mt-3">
@@ -31,7 +34,7 @@ function ProductCardItem({ product, editable = false, purchase }) {
       </Link>
 
       <div className="mt-3 md:flex justify-between items-center">
-        {!purchase &&
+        {!purchase && (
           <>
             <div className="md:flex gap-2 items-center">
               {product?.user?.image && (
@@ -41,6 +44,7 @@ function ProductCardItem({ product, editable = false, purchase }) {
                   width={20}
                   height={20}
                   className="rounded-full"
+                  loading="lazy"
                 />
               )}
 
@@ -50,10 +54,14 @@ function ProductCardItem({ product, editable = false, purchase }) {
             </div>
 
             <AddToCartBtn editable={editable} product={product} />
-          </>}
+          </>
+        )}
+
         {purchase && (
           <Link href={product?.fileUrl}>
-            <Button className="w-full">Download Content</Button>
+            <Button className="w-full">
+              Download Content
+            </Button>
           </Link>
         )}
       </div>
@@ -61,4 +69,4 @@ function ProductCardItem({ product, editable = false, purchase }) {
   );
 }
 
-export default ProductCardItem;
+export default memo(ProductCardItem); 

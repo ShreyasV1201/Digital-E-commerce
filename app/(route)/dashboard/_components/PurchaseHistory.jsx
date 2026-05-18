@@ -1,29 +1,52 @@
-import axios from "axios"
-import { useEffect, useState } from "react";
-import DisplayProductList from '../../../../app/_components/DisplayProductList';
+"use client";
 
+import axios from "axios";
+import { useCallback, useEffect, useState } from "react";
+import DisplayProductList from "../../../../app/_components/DisplayProductList";
 
-function PurchaseHistory(){
+function PurchaseHistory() {
+  const [productList, setProductList] = useState([]);
 
-    const [productList,setProductList]=useState([]);
-    
-    useEffect(()=>{
-        getPurchaseHistory();
-    },[])
-    const getPurchaseHistory=async()=>{
-        const result=await axios.get('/api/order');
-        setProductList(result.data);
-    }
+  const getPurchaseHistory = useCallback(async (signal) => {
+    const result = await axios.get("/api/order", {
+      signal,
+    });
 
-    return(
-        <div>
-            <h2 className="font-bold text-3xl mt-5">Purchase History</h2>
+    setProductList(Array.isArray(result.data) ? result.data : []);
+  }, []);
 
-            <DisplayProductList productList={productList}
-                purchase={true}
-                 />
-        </div>
-    )
+  useEffect(() => {
+    const controller = new AbortController();
+
+    getPurchaseHistory(controller.signal).catch((error) => {
+      if (
+        error?.name === "CanceledError" ||
+        error?.code === "ERR_CANCELED"
+      ) {
+        return;
+      }
+
+      console.log(
+        "PURCHASE HISTORY ERROR:",
+        error?.response?.data || error
+      );
+    });
+
+    return () => controller.abort();
+  }, [getPurchaseHistory]);
+
+  return (
+    <div>
+      <h2 className="font-bold text-3xl mt-5">
+        Purchase History
+      </h2>
+
+      <DisplayProductList
+        productList={productList}
+        purchase={true}
+      />
+    </div>
+  );
 }
 
-export default PurchaseHistory
+export default PurchaseHistory;

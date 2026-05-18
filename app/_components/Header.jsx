@@ -1,23 +1,25 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ShoppingBag, Menu } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
-import { useContext } from "react";
+import { memo, useContext, useMemo } from "react";
 import { CartContext } from "../_context/CartContext";
 import CartList from "./CartList";
 
-
 function Header() {
-  const MenuList = [
-    { name: "Home", path: "/" },
-    { name: "Store", path: "/store" },
-    { name: "Explore", path: "/explore" },
-  ];
+  const MenuList = useMemo(
+    () => [
+      { name: "Home", path: "/" },
+      { name: "Store", path: "/store" },
+      { name: "Explore", path: "/explore" },
+    ],
+    []
+  );
 
-  const { cart, setCart } = useContext(CartContext);
+  const { cart } = useContext(CartContext);
 
   return (
     <div className="flex p-4 px-4 md:px-16 lg:px-32 bg-primary border-b-2 border-black justify-between items-center">
@@ -34,7 +36,7 @@ function Header() {
             key={menu.name}
             className="px-2 p-1 cursor-pointer hover:border-2 hover:border-white"
           >
-            {menu.name}
+            <Link href={menu.path}>{menu.name}</Link>
           </li>
         ))}
       </ul>
@@ -44,21 +46,23 @@ function Header() {
         <CartList>
           <div className="flex items-center gap-1 cursor-pointer">
             <ShoppingBag size={20} />
+
             <Badge className="bg-black hover:bg-black rounded-full py-1">
-              {cart?.length}
+              {cart?.length || 0}
             </Badge>
           </div>
         </CartList>
 
-        <Link href={'/dashboard'}>
+        <Link href="/dashboard">
           <Button className="bg-[oklch(27.8%_0.033_256.848)] hover:bg-blue-600 text-sm md:text-base px-3 md:px-4">
             Start Selling
           </Button>
         </Link>
+
         <UserButton />
       </div>
     </div>
   );
 }
 
-export default Header;
+export default memo(Header);
