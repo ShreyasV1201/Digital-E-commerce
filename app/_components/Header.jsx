@@ -13,7 +13,7 @@ function Header() {
   const MenuList = useMemo(
     () => [
       { name: "Home", path: "/" },
-      { name: "Store", path: "/store" },
+      
       { name: "Explore", path: "/explore" },
     ],
     []
