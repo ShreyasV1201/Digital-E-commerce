@@ -107,12 +107,6 @@ npm run dev
 
 ---
 
-## Screenshots
-
-*Add project screenshots here*
-
----
-
 ## Author
 
 Shreyas V
