@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Digital E-Commerce Platform
 
-## Getting Started
+A modern full-stack e-commerce platform built with Next.js, Clerk authentication, PostgreSQL, and PayPal integration.
+The application provides a seamless shopping experience with secure authentication, product browsing, cart management, and payment processing.
 
-First, run the development server:
+---
+
+## Features
+
+* User authentication and authorization with Clerk
+* Product listing and product detail pages
+* Shopping cart functionality
+* PayPal payment integration
+* Responsive modern UI
+* Secure backend APIs
+* Database integration with PostgreSQL
+* Dynamic routing using Next.js App Router
+
+---
+
+## Tech Stack
+
+### Frontend
+
+* Next.js
+* React
+* TypeScript
+* Tailwind CSS
+
+### Backend
+
+* Next.js API Routes
+* PostgreSQL
+* Drizzle ORM
+
+### Authentication & Payments
+
+* Clerk Authentication
+* PayPal API
+
+---
+
+## Project Structure
+
+```bash
+app/
+components/
+lib/
+db/
+public/
+```
+
+* `app/` → App Router pages and API routes
+* `components/` → Reusable UI components
+* `lib/` → Utility functions and configurations
+* `db/` → Database schema and queries
+* `public/` → Static assets
+
+---
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/ShreyasV1201/Digital-E-commerce.git
+```
+
+Move into the project folder:
+
+```bash
+cd Digital-E-commerce
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create a `.env` file and configure:
+
+```env
+DATABASE_URL=
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+PAYPAL_CLIENT_ID=
+PAYPAL_CLIENT_SECRET=
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Future Improvements
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* Product reviews and ratings
+* Order history dashboard
+* Admin analytics panel
+* Wishlist functionality
+* AI-powered product recommendations
+* Inventory management system
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Screenshots
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+*Add project screenshots here*
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Author
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Shreyas V
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+GitHub:
+https://github.com/ShreyasV1201
+
